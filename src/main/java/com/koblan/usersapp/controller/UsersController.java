@@ -61,12 +61,12 @@ public class UsersController {
 	 }
 
      @GetMapping(value="/users/range")
-        public List<User> getUsers(@RequestParam("from") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate from,
+        public ResponseEntity<List<User>> getUsersByDateRange(@RequestParam("from") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate from,
                                @RequestParam("to") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate to) 
                                throws IncorrectDateRangeException {
             List<User> users=userService.getUsers(from, to);
             System.out.println(users+">");
-            return users;
+            return ResponseEntity.ok(users);
      }
 
      @GetMapping(value="/users")
