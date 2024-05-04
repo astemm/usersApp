@@ -37,10 +37,7 @@ public class User {
 
     private String phoneNumber;
 
-    public User() {
-        //ID++;
-        //this.id=(int)ID;
-    }
+    public User() {}
 
     public User(String firstName, String lastName, String email,
     LocalDate birthDate)      {
@@ -82,6 +79,7 @@ public class User {
 	}
 
     public void setId(int id) {
+        //if (this.id!=0) return;
         if (id==0) {   //we do not pass id just note we should generate it
            ID++;
            this.id=(int)ID;

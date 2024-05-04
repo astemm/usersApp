@@ -44,7 +44,7 @@ public class UserService {
         //System.out.println(age);
         if (age<minAge) 
         throw new NotHaveMinimumAgeException("User should have at least 18 years to register");
-        user.setId(0);//marking for id generation
+        if (user.getId()==0) user.setId(0);//marking for id generation
         usersList.add(user);
         int i=(int)User.getIncrementId();
         User newUser=usersList.get(i-1);
