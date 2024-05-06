@@ -41,8 +41,6 @@ public class User {
 
     public User(String firstName, String lastName, String email,
     LocalDate birthDate)      {
-        ID++;
-        this.id=(int)ID;
         this.firstName=firstName;
         this.lastName=lastName;
         this.email=email;
@@ -51,8 +49,6 @@ public class User {
 
     public User(String firstName, String lastName, String email,
     LocalDate birthDate, String field, String fieldName)      {
-        ID++;
-        this.id=(int)ID;
         this.firstName=firstName;
         this.lastName=lastName;
         this.email=email;
@@ -70,6 +66,10 @@ public class User {
             }
     }
 
+    public static void doIncrementId() {
+		ID++;
+	}
+
     public static long getIncrementId() {
 		return ID;
 	}
@@ -79,12 +79,7 @@ public class User {
 	}
 
     public void setId(int id) {
-        //if (this.id!=0) return;
-        if (id==0) {   //we do not pass id just note we should generate it
-           ID++;
-           this.id=(int)ID;
-        }
-        else this.id=id;
+        this.id=id;
     }
     
     public String getFirstName() {

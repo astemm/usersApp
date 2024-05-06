@@ -42,18 +42,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         
     }
 
-    /*
-    @ExceptionHandler(DateTimeParseException.class)
-    public ResponseEntity<String> showDateException(DateTimeParseException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
-    }
-
-    @ExceptionHandler(JsonProcessingException.class)
-    public ResponseEntity<String> showJsonException(JsonProcessingException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
-    } */
-
-
     @Override
     public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
     HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -73,6 +61,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotHaveMinimumAgeException.class)
     public ResponseEntity<String> handleMinAgeException(NotHaveMinimumAgeException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(PatchUserException.class)
+    public ResponseEntity<String> handlePatchUserException(PatchUserException ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 

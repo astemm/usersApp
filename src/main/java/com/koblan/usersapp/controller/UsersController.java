@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +20,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import com.koblan.usersapp.exceptions.NotHaveMinimumAgeException;
+import com.koblan.usersapp.exceptions.PatchUserException;
 import com.koblan.usersapp.exceptions.IncorrectDateRangeException;
 import com.koblan.usersapp.exceptions.NoSuchUserException;
 import com.koblan.usersapp.model.User;
@@ -48,8 +47,8 @@ public class UsersController {
 	 }
 
      @PatchMapping(value = "/users/{id}")
-	    public  ResponseEntity<User> patchUser(@RequestBody User nuser, @PathVariable int id) throws NoSuchUserException {
-	        userService.patchUser(nuser, id);
+	    public  ResponseEntity<User> patchUser(@RequestBody User nuser, @PathVariable int id) throws NoSuchUserException, PatchUserException {
+            userService.patchUser(nuser, id);
 	        Optional<User> user = userService.getUser(id);
 	        return new ResponseEntity<>(user.get(), HttpStatus.OK);
 	 }
@@ -74,12 +73,4 @@ public class UsersController {
             List<User> users=List.copyOf(userService.getAllUsers());
             return users;
      }
-
-
-     @GetMapping(value="/users1")
-     @ResponseBody
-     public String sampleRequest() {
-         return new String("Users Again");
-     }
-     
 }

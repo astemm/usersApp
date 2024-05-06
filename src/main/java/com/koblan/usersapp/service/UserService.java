@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.koblan.usersapp.exceptions.IncorrectDateRangeException;
 import com.koblan.usersapp.exceptions.NoSuchUserException;
 import com.koblan.usersapp.exceptions.NotHaveMinimumAgeException;
+import com.koblan.usersapp.exceptions.PatchUserException;
 import com.koblan.usersapp.model.User;
 import java.time.LocalDate;
 
@@ -38,20 +39,23 @@ public class UserService {
     }
 
     public User createUser(User user) throws NotHaveMinimumAgeException {
-        //System.out.println(minAge);
         Period period=Period.between(user.getBirthDate(), LocalDate.now());
         int age=period.getYears();
-        //System.out.println(age);
         if (age<minAge) 
         throw new NotHaveMinimumAgeException("User should have at least 18 years to register");
-        if (user.getId()==0) user.setId(0);//marking for id generation
+        User.doIncrementId();
+        int incr=(int)User.getIncrementId();
+        user.setId(incr);
         usersList.add(user);
         int i=(int)User.getIncrementId();
         User newUser=usersList.get(i-1);
         return newUser;
     }
 
-    public void patchUser(User partialUser, int id) throws NoSuchUserException {
+    public void patchUser(User partialUser, int id) throws NoSuchUserException, PatchUserException {
+        if (id>User.getIncrementId() || id<1) {
+            throw new NoSuchUserException("There is no user with such id");
+        }
         User existingUser=usersList.get(id-1);
         if (existingUser==null) {
             throw new NoSuchUserException("There is no user with such id");
@@ -66,10 +70,16 @@ public class UserService {
         }
 
         if(partialUser.getEmail()!=null){
+            if (!EmailValidator.isValidEmail(partialUser.getEmail())) {
+               throw new PatchUserException("Email should be valid");
+            }
             existingUser.setEmail(partialUser.getEmail());
         }
 
        if(partialUser.getBirthDate()!=null){
+            if (!partialUser.getBirthDate().isBefore(LocalDate.now())) {
+               throw new PatchUserException("BirtDate should be earlier than current date");
+            }
             existingUser.setBirthDate(partialUser.getBirthDate());
         }
 
