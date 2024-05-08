@@ -14,6 +14,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import jakarta.validation.ConstraintViolationException;
+
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -28,7 +31,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
        
        Map<String, String> errors = new HashMap<>();
        ex.getBindingResult().getAllErrors().forEach((error) -> {
-       String fieldName = ((FieldError) error).getField();
+       String fieldName;
+       if (error instanceof FieldError) {
+       fieldName = ((FieldError) error).getField();
+       }
+       else {
+       fieldName=error.getObjectName();
+       }
        String errorMessage = error.getDefaultMessage();
        errors.put(fieldName, errorMessage);
        });

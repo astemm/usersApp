@@ -1,4 +1,4 @@
-package com.koblan.usersapp.service;
+package com.koblan.usersapp.service.validator;
 
 import java.util.regex.*;
 

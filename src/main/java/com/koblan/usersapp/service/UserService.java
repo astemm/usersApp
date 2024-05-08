@@ -16,6 +16,8 @@ import com.koblan.usersapp.exceptions.NoSuchUserException;
 import com.koblan.usersapp.exceptions.NotHaveMinimumAgeException;
 import com.koblan.usersapp.exceptions.PatchUserException;
 import com.koblan.usersapp.model.User;
+import com.koblan.usersapp.service.validator.EmailValidator;
+
 import java.time.LocalDate;
 
 import java.util.Optional;
@@ -120,7 +122,6 @@ public class UserService {
     }
 
     public List<User> getUsers(LocalDate fromDate, LocalDate toDate) throws IncorrectDateRangeException {
-        System.out.println(fromDate+" "+toDate);
         if (!toDate.isAfter(fromDate)) {
             throw new IncorrectDateRangeException("FromDate parameter should be later than ToDate parameter"); 
         }

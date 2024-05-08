@@ -1,0 +1,11 @@
+##### UsersApp
+- Spring Boot 3.2.5
+- Java 17
+- Structure: UsersController, UserService, Data Persistence Layer absent
+- Data Persistence Layer substituted by in-memory UserService List of Users
+- API: createUser, updateUser, patchUser, deleteUser, getUsersByDateRange (and getUsersByDateRange1 with Custom Validator), getUsers
+- Checks: created User is 18 years old; getUsersByDateRange validates if 'To' date is after 'From' date
+- DateFormat pattern used - "dd/MM/yyyy"
+- RestExceptionHandler - global exceptions handler
+- Unit and Integration Tests (UserControllerTest, UserSpringControllerIntegrationTest) - JUnit5
+- User model attributes: FirstName, LastName, Email (validation for email pattern), BirthDate (validation for not earlier than current date), Address (optional), PhoneNumber (optional)
